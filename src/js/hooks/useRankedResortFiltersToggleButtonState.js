@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 /**
  * Reference a ranked resort filter toggleOn state from local storage
  *
- * @param {string} rankedResortFilterId
+ * @param {string} filterToggleButtonID
  * @return {[boolean, function]}
  */
-const useRankedResortFiltersToggleButtonState = (rankedResortFilterId) => {
+const useRankedResortFiltersToggleButtonState = (filterToggleButtonID) => {
   const storeToggleOn = (collapsed) => {
     const currentState = localStorage.getItem('rankedResortFilterToggleState') || 'io'; // e.g "io_1_2_3_4_5"
     // Get the state without the current resort's id
-    const newStateArray = currentState.split('_').filter((id) => id !== rankedResortFilterId);
+    const newStateArray = currentState.split('_').filter((id) => id !== filterToggleButtonID);
 
     if (collapsed) {
-      newStateArray.push(rankedResortFilterId);
+      newStateArray.push(filterToggleButtonID);
     }
 
     localStorage.setItem('rankedResortFilterToggleState', newStateArray.join('_'));
@@ -22,7 +22,7 @@ const useRankedResortFiltersToggleButtonState = (rankedResortFilterId) => {
   const storedAsToggleOn = () => {
     const currentState = localStorage.getItem('rankedResortFilterToggleState') || ''; // e.g "1_2_3_4_5"
 
-    return currentState.split('_').some((id) => id === rankedResortFilterId);
+    return currentState.split('_').some((id) => id === filterToggleButtonID);
   };
 
   const [toggleOn, setToggleOn] = useState(storedAsToggleOn());
